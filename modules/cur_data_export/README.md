@@ -97,6 +97,7 @@ module "cur2_data_export" {
 
 ### Outputs
 
-| Name                      | Description                             |
-|---------------------------|-----------------------------------------|
-| data_export_bucket_name   | S3 bucket name for storing DataExports. |
+| Name                               | Description                                                   |
+|------------------------------------|---------------------------------------------------------------|
+| data_export_bucket_name            | S3 bucket name for storing local DataExports.                 |
+| data_exports_aggregate_bucket_name | Centralized S3 bucket name for storing aggregate DataExports. |

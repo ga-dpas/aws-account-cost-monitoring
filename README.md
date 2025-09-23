@@ -263,7 +263,7 @@ module "cur2_data_analytics" {
   resource_prefix = local.resource_prefix
 
   # Data aggregation configuration
-  data_exports_aggregate_bucket_name = local.data_export_bucket
+  data_exports_aggregate_bucket_name = local.data_exports_aggregate_bucket_name
   # Enable this for account cost monitoring S3 replication configuration
   deploy_data_export_aggregate_s3 = true
   enable_s3_replication           = true
