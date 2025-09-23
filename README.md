@@ -1,8 +1,7 @@
 # Account Cost Monitoring
 
 This project provides a dashboard and infrastructure for AWS Cost and Usage Report 2.0 (CUR 2.0). It uses Terraform
-to provision the infrastructure and Helm to deploy the dashboard. Alternatively, you can import the dashboard
-and set the datasource manually.
+to provision the infrastructure and Helm to deploy the dashboard.
 
 ## Architecture
 
@@ -56,7 +55,7 @@ Refer module [README](modules/cur_data_export/README.md) for more detail.
 ### Step 3 of 3: Data analysis and visualization
 
 After loading your CUR 2.0 export data into a data analytics tool, you are ready to query Athena and
-setup Grafana Dashboard in order to gain cost and usage insights.
+setup Grafana dashboard in order to gain cost and usage insights.
 
 - Query Athena data export `data` table in database (e.g. "${var.resource_prefix}-data-export") in Amazon Athena query console.
 For example, the following query shows year-to-date costs by service for each month. Update the year to see current year-to-date costs.
@@ -71,10 +70,19 @@ HAVING sum(line_item_blended_cost) > 0
 ORDER BY  line_item_product_code;
 ```
 
-- Proceed with setting up `Amazon Athena` grafana datasource and import [sample dashboard](charts/aws-cost-monitoring/dashboards/aws-cur2-billing-dashboard.json) in Grafana.
-Alternatively, you can build and manage [aws-cost-monitoring Helm chart](charts/aws-cost-monitoring) and use it for your Kubernetes deployments.
+- Proceed with setting up Grafana Athena datasource and setup
+[AWS cost monitoring dashboard](charts/aws-cost-monitoring/dashboards/aws-cur2-billing-dashboard.json) in Grafana.
 
-**Grafana Athena Datasource Configuration:**
+**Using [aws-cost-monitoring Helm chart](charts/aws-cost-monitoring/) for deployment:**
+
+```
+helm repo add aws-cost-monitoring https://raw.githubusercontent.com/ga-dpas/aws-account-cost-monitoring/gh-pages/
+helm install my-aws-cost-monitoring aws-cost-monitoring/aws-cost-monitoring --values values.yaml
+```
+
+**Alternatively, you can add datasource and dashboard manually as below:**
+
+_Grafana Athena Datasource Configuration:_
 
 ```yaml
 apiVersion: v1
@@ -109,7 +117,7 @@ data:
           # secretKey: YOUR_AWS_SECRET_ACCESS_KEY # This should be referenced from a Kubernetes Secret
 ```
 
-**Grafana AWS CUR Billing Report Configuration:**
+_Grafana AWS CUR Billing Report Configuration:_
 
 ```yaml
 apiVersion: v1
@@ -137,6 +145,14 @@ provider "aws" {
   }
 }
 
+provider "aws" {
+  alias  = "us-east-1"
+  region = "us-east-1" # CUR is only available in us-east-1
+  default_tags {
+    tags = local.tags
+  }
+}
+
 data "aws_caller_identity" "current" {}
 
 locals {
@@ -148,7 +164,7 @@ locals {
   }
 
   account_id         = data.aws_caller_identity.current.account_id
-  resource_prefix    = lower("${local.project}-${local.stack_name}-${local.environment}")
+  resource_prefix    = "dpas-dev-acm"
   data_export_bucket = "${local.resource_prefix}-${local.account_id}-data-exports" # local bucket
 }
 
@@ -192,6 +208,14 @@ provider "aws" {
   }
 }
 
+provider "aws" {
+  alias  = "us-east-1"
+  region = "us-east-1" # CUR is only available in us-east-1
+  default_tags {
+    tags = local.tags
+  }
+}
+
 data "aws_caller_identity" "current" {}
 
 locals {
@@ -204,7 +228,7 @@ locals {
 
   account_id                = data.aws_caller_identity.current.account_id
   data_aggregate_account_id = "123456789012"  # example
-  resource_prefix           = lower("${local.project}-${local.stack_name}-${local.environment}")
+  resource_prefix           = "dpas-dev-acm"
   data_export_bucket        = "${local.resource_prefix}-${local.account_id}-data-exports-local" # local bucket
   data_exports_aggregate_bucket_name = "${local.resource_prefix}-${local.data_aggregate_account_id}-data-exports" # centralised bucket
 }
@@ -222,7 +246,7 @@ module "cur2_data_export" {
   # Centralised replication bucket must exists in your data aggregation account.
   # Creation of replication bucket is supported in `module/cur_data_analytics` TF module.
   enable_s3_replication = true
-  data_exports_aggregate_bucket_name = local.replication_data_export_bucket
+  data_exports_aggregate_bucket_name = local.data_exports_aggregate_bucket_name
   
   providers = {
     aws.default = aws.default

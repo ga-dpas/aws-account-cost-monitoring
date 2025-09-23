@@ -29,6 +29,14 @@ provider "aws" {
   }
 }
 
+provider "aws" {
+  alias  = "us-east-1"
+  region = "us-east-1" # CUR is only available in us-east-1
+  default_tags {
+    tags = local.tags
+  }
+}
+
 data "aws_caller_identity" "current" {}
 
 locals {
@@ -41,7 +49,7 @@ locals {
 
   account_id                = data.aws_caller_identity.current.account_id
   data_aggregate_account_id = "123456789012"  # example
-  resource_prefix           = lower("${local.project}-${local.stack_name}-${local.environment}")
+  resource_prefix           = "dpas-dev-acm"
   data_export_bucket        = "${local.resource_prefix}-${local.account_id}-data-exports" # local bucket
   data_exports_aggregate_bucket_name = "${local.resource_prefix}-${local.data_aggregate_account_id}-data-exports" # centralised bucket
 }
@@ -60,7 +68,7 @@ module "cur2_data_export" {
   # Centralised replication bucket must exists in your data aggregation account.
   # Creation of replication bucket is supported in `module/cur_data_analytics` TF module.
   enable_s3_replication = false
-  data_exports_aggregate_bucket_name = local.replication_data_export_bucket
+  data_exports_aggregate_bucket_name = local.data_exports_aggregate_bucket_name
   
   providers = {
     aws.default = aws.default

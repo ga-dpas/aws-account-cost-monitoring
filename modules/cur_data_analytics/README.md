@@ -37,8 +37,8 @@ locals {
     "environemnt" = "dev"
   }
 
-  account_id      = data.aws_caller_identity.current.account_id
-  resource_prefix = "acm-dpas"
+  account_id         = data.aws_caller_identity.current.account_id
+  resource_prefix    = "dpas-dev-acm"
   data_export_bucket = "${local.resource_prefix}-${local.account_id}-data-exports" # centralised bucket
 }
 
