@@ -1,0 +1,22 @@
+apiVersion: v1
+entries:
+  aws-cost-monitoring:
+  - apiVersion: v2
+    appVersion: 1.0.0
+    created: "2025-09-23T04:07:05.386910415Z"
+    description: Deploy a Grafana dashboard for AWS Organization Cost and Usage Reports.
+      View reports for all accounts in an AWS monitoring account in a single dashboard.
+      Requires a specific AWS infrastructure setup, see project source for details.
+    digest: 6ef34fdcfa376a37d099057dd7f8e112fb0cf863bd74db61cce724748ed38152
+    keywords:
+    - AWS
+    - Grafana
+    - Dashboard
+    - Cost and Usage Reports
+    - CUR
+    - Billing
+    name: aws-cost-monitoring
+    urls:
+    - https://raw.githubusercontent.com/ga-dpas/aws-account-cost-monitoring/gh-pages/aws-cost-monitoring-1.0.0.tgz
+    version: 1.0.0
+generated: "2025-09-23T04:07:05.386128391Z"
