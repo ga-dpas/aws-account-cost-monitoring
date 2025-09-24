@@ -80,7 +80,7 @@ resource "aws_s3_bucket_lifecycle_configuration" "data_export_aggregate_s3" {
       noncurrent_days = 1
     }
     expiration {
-      days = 7
+      days = 730  # 2 years
     }
   }
 
