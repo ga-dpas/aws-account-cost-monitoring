@@ -44,7 +44,7 @@ locals {
 
 
 module "cur2_data_analytics" {
-  source = "git@github.com:ga-dpas/aws-account-cost-monitoring.git//module/cur_data_analytics?ref=main"
+  source = "git@github.com:ga-dpas/aws-account-cost-monitoring.git//modules/cur_data_analytics?ref=main"
 
   resource_prefix = local.resource_prefix
   
@@ -57,6 +57,10 @@ module "cur2_data_analytics" {
   
   # Data analytics configuration
   deploy_data_analytics = true
+
+  providers = {
+    aws.default = aws.default
+  }
 
   tags = local.tags
 }

@@ -56,7 +56,7 @@ locals {
 
 
 module "cur2_data_export" {
-  source = "git@github.com:ga-dpas/aws-account-cost-monitoring.git//module/cur_data_export?ref=main"
+  source = "git@github.com:ga-dpas/aws-account-cost-monitoring.git//modules/cur_data_export?ref=main"
 
   resource_prefix       = local.resource_prefix
 

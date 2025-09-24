@@ -57,25 +57,37 @@ Refer module [README](modules/cur_data_export/README.md) for more detail.
 After loading your CUR 2.0 export data into a data analytics tool, you are ready to query Athena and
 setup Grafana dashboard in order to gain cost and usage insights.
 
-- Query Athena data export `data` table in database (e.g. "${var.resource_prefix}-data-export") in Amazon Athena query console.
-For example, the following query shows year-to-date costs by service for each month. Update the year to see current year-to-date costs.
+- To run a query in the Amazon Athena Query Editor, follow these steps:
+  - Navigate to the Athena service in the AWS Management Console and select "Query Editor" from the left sidebar
+  - Select appropriate Data Source (ie AwsDataCatalog) and DataExports Database and Table from the dropdown
+- In the main query editor pane, you can either write a new SQL query or paste an existing one. For example, the 
+  following query shows year-to-date costs by service for each region.
 
-```
-SELECT line_item_product_code,
-    sum(line_item_blended_cost) AS cost, month
-FROM data
-WHERE year='2015'
-GROUP BY  line_item_product_code, month
-HAVING sum(line_item_blended_cost) > 0
-ORDER BY  line_item_product_code;
-```
+  ```console
+  SELECT
+      line_item_usage_account_id,
+      bill_payer_account_id,
+      line_item_product_code,
+      product_region_code,
+      sum(cast(line_item_blended_cost as DECIMAL(16,2))) AS cost,
+      pricing_term
+  FROM cur2
+  WHERE year(bill_billing_period_start_date) = year(current_date)
+  GROUP BY
+      line_item_usage_account_id,
+      bill_payer_account_id,
+      line_item_product_code,
+      product_region_code,
+      pricing_term
+  HAVING sum(cast(line_item_blended_cost as DECIMAL(16,2))) > 0
+  ORDER BY line_item_usage_account_id, line_item_product_code;
+  ```
 
-- Proceed with setting up Grafana Athena datasource and setup
-[AWS cost monitoring dashboard](charts/aws-cost-monitoring/dashboards/aws-cur2-billing-dashboard.json) in Grafana.
+- Proceed with setting up Grafana Athena datasource and import [AWS cost monitoring dashboard](charts/aws-cost-monitoring/dashboards/aws-cur2-billing-dashboard.json) in Grafana:
 
-**Using [aws-cost-monitoring Helm chart](charts/aws-cost-monitoring/) for deployment:**
+**Use [aws-cost-monitoring Helm chart](charts/aws-cost-monitoring/) for deployment:**
 
-```
+```console
 helm repo add aws-cost-monitoring https://raw.githubusercontent.com/ga-dpas/aws-account-cost-monitoring/gh-pages/
 helm install my-aws-cost-monitoring aws-cost-monitoring/aws-cost-monitoring --values values.yaml
 ```
@@ -170,7 +182,7 @@ locals {
 
 
 module "cur2_data_export" {
-  source = "git@github.com:ga-dpas/aws-account-cost-monitoring.git//module/cur_data_export?ref=main"
+  source = "git@github.com:ga-dpas/aws-account-cost-monitoring.git//modules/cur_data_export?ref=main"
 
   resource_prefix       = local.resource_prefix
 
@@ -187,12 +199,16 @@ module "cur2_data_export" {
 }
 
 module "cur2_data_analytics" {
-  source = "git@github.com:ga-dpas/aws-account-cost-monitoring.git//module/cur_data_analytics?ref=main"
+  source = "git@github.com:ga-dpas/aws-account-cost-monitoring.git//modules/cur_data_analytics?ref=main"
 
   resource_prefix = local.resource_prefix
   data_exports_aggregate_bucket_name = local.data_export_bucket   # Data Export S3 bucket
   deploy_data_analytics = true   # Data analytics configuration
 
+  providers = {
+    aws.default = aws.default
+  }
+  
   tags = local.tags
 }
 ```
@@ -235,7 +251,7 @@ locals {
 
 # Deply to all Source Accounts
 module "cur2_data_export" {
-  source = "git@github.com:ga-dpas/aws-account-cost-monitoring.git//module/cur_data_export?ref=main"
+  source = "git@github.com:ga-dpas/aws-account-cost-monitoring.git//modules/cur_data_export?ref=main"
 
   resource_prefix       = local.resource_prefix
 
@@ -258,7 +274,7 @@ module "cur2_data_export" {
 
 # Deploy to Data Aggregation Account
 module "cur2_data_analytics" {
-  source = "git@github.com:ga-dpas/aws-account-cost-monitoring.git//module/cur_data_analytics?ref=main"
+  source = "git@github.com:ga-dpas/aws-account-cost-monitoring.git//modules/cur_data_analytics?ref=main"
 
   resource_prefix = local.resource_prefix
 
@@ -271,6 +287,10 @@ module "cur2_data_analytics" {
 
   # Data analytics configuration
   deploy_data_analytics = true
+
+  providers = {
+    aws.default = aws.default
+  }
 
   tags = local.tags
 }
