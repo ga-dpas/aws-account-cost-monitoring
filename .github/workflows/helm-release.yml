@@ -6,8 +6,11 @@ permissions:
 on:
   workflow_dispatch:
   push:
+    paths:
+      - 'charts/**'
     branches:
       - main
+
 
 jobs:
   release:
