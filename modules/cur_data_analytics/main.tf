@@ -754,12 +754,35 @@ resource "aws_iam_policy" "data_exports_read_access_policy" {
         {
           "Effect" : "Allow",
           "Action" : [
+            "athena:GetDatabase",
+            "athena:GetDataCatalog",
+            "athena:GetTableMetadata",
+            "athena:ListDatabases",
+            "athena:ListDataCatalogs",
+            "athena:ListTableMetadata",
+            "athena:ListWorkGroups"
+          ],
+          "Resource" : [
+            "*"
+          ]
+        },
+        {
+          "Effect" : "Allow",
+          "Action" : [
             "athena:GetQueryExecution",
             "athena:GetQueryResults",
-            "athena:GetQueryResultsStream",
             "athena:GetWorkGroup",
             "athena:StartQueryExecution",
             "athena:StopQueryExecution"
+          ],
+          "Resource" : [
+            "*"
+          ]
+        },
+        {
+          "Effect" : "Allow",
+          "Action" : [
+            "glue:GetDatabases"
           ],
           "Resource" : [
             "*"
