@@ -25,7 +25,7 @@
   "editable": true,
   "fiscalYearStartMonth": 0,
   "graphTooltip": 0,
-  "id": 15,
+  "id": 38,
   "links": [
     {
       "asDropdown": false,
@@ -90,7 +90,7 @@
         "content": "\n<div style='font-size: 18px'>\n<span style='color: #0dc201;font-weight: bold'>C</span>ost and <span style='color: #0dc201;font-weight: bold'>U</span>sage <span style='color: #0dc201;font-weight: bold'>RE</span>port (<span style='color: #0dc201;font-weight: bold'>CURE</span>) Dashboard for Amazon Managed Grafana\n</div>\n\nThe CURE Dashboard is a customizable Amazon Managed Grafana\n dashboard which provides a summary view as well as granular \n service level views for <a href='https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/concepts.html'>EC2</a>, \n <a href='https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ebs-volumes.html'>EBS Storage</a>, <a href='https://docs.aws.amazon.com/cur/latest/userguide/cur-data-transfers-charges.html'>Data Transfer</a> and <a href='https://docs.aws.amazon.com/rds/index.html'>RDS</a>.  Directors and Managers of DevOps and IT Organizations will find the detailed data applicable to deep dive cost and fine tune cost efficiency.   With little effort customers may modify or add sections based on their service adoption. ",
         "mode": "html"
       },
-      "pluginVersion": "10.2.2",
+      "pluginVersion": "10.4.1",
       "targets": [
         {
           "datasource": {
@@ -252,11 +252,12 @@
           "fields": "",
           "values": false
         },
+        "showPercentChange": false,
         "text": {},
         "textMode": "auto",
         "wideLayout": true
       },
-      "pluginVersion": "10.2.2",
+      "pluginVersion": "10.4.1",
       "targets": [
         {
           "connectionArgs": {
@@ -422,11 +423,12 @@
           "fields": "/.*/",
           "values": false
         },
+        "showPercentChange": false,
         "text": {},
         "textMode": "value",
         "wideLayout": true
       },
-      "pluginVersion": "10.2.2",
+      "pluginVersion": "10.4.1",
       "targets": [
         {
           "connectionArgs": {
@@ -616,9 +618,10 @@
         },
         "showThresholdLabels": false,
         "showThresholdMarkers": true,
+        "sizing": "auto",
         "text": {}
       },
-      "pluginVersion": "10.2.2",
+      "pluginVersion": "10.4.1",
       "targets": [
         {
           "connectionArgs": {
@@ -695,11 +698,12 @@
           "fields": "/.*/",
           "values": false
         },
+        "showPercentChange": false,
         "text": {},
         "textMode": "value",
         "wideLayout": true
       },
-      "pluginVersion": "10.2.2",
+      "pluginVersion": "10.4.1",
       "targets": [
         {
           "connectionArgs": {
@@ -717,7 +721,6 @@
         }
       ],
       "title": "Most costly region",
-      "transformations": [],
       "type": "stat"
     },
     {
@@ -771,8 +774,7 @@
                 "mode": "absolute",
                 "steps": [
                   {
-                    "color": "green",
-                    "value": null
+                    "color": "green"
                   },
                   {
                     "color": "red",
@@ -898,8 +900,7 @@
                 "mode": "absolute",
                 "steps": [
                   {
-                    "color": "green",
-                    "value": null
+                    "color": "green"
                   },
                   {
                     "color": "red",
@@ -988,8 +989,7 @@
                 "mode": "absolute",
                 "steps": [
                   {
-                    "color": "green",
-                    "value": null
+                    "color": "green"
                   },
                   {
                     "color": "red",
@@ -1061,8 +1061,7 @@
                 "mode": "absolute",
                 "steps": [
                   {
-                    "color": "green",
-                    "value": null
+                    "color": "green"
                   },
                   {
                     "color": "red",
@@ -1230,8 +1229,7 @@
                 "mode": "absolute",
                 "steps": [
                   {
-                    "color": "green",
-                    "value": null
+                    "color": "green"
                   }
                 ]
               },
@@ -1535,8 +1533,7 @@
                 "mode": "absolute",
                 "steps": [
                   {
-                    "color": "green",
-                    "value": null
+                    "color": "green"
                   }
                 ]
               },
@@ -1770,8 +1767,7 @@
                 "mode": "absolute",
                 "steps": [
                   {
-                    "color": "green",
-                    "value": null
+                    "color": "green"
                   }
                 ]
               },
@@ -1875,8 +1871,7 @@
                 "mode": "absolute",
                 "steps": [
                   {
-                    "color": "green",
-                    "value": null
+                    "color": "green"
                   }
                 ]
               },
@@ -1957,8 +1952,7 @@
                 "mode": "absolute",
                 "steps": [
                   {
-                    "color": "green",
-                    "value": null
+                    "color": "green"
                   },
                   {
                     "color": "red",
@@ -2032,8 +2026,7 @@
                 "mode": "absolute",
                 "steps": [
                   {
-                    "color": "green",
-                    "value": null
+                    "color": "green"
                   },
                   {
                     "color": "red",
@@ -2185,8 +2178,7 @@
                 "mode": "absolute",
                 "steps": [
                   {
-                    "color": "green",
-                    "value": null
+                    "color": "green"
                   }
                 ]
               },
@@ -2310,8 +2302,7 @@
                 "mode": "absolute",
                 "steps": [
                   {
-                    "color": "green",
-                    "value": null
+                    "color": "green"
                   }
                 ]
               },
@@ -2442,8 +2433,7 @@
                 "mode": "absolute",
                 "steps": [
                   {
-                    "color": "green",
-                    "value": null
+                    "color": "green"
                   },
                   {
                     "color": "red",
@@ -2510,8 +2500,7 @@
                 "mode": "absolute",
                 "steps": [
                   {
-                    "color": "green",
-                    "value": null
+                    "color": "green"
                   },
                   {
                     "color": "red",
@@ -2574,10 +2563,61 @@
     }
   ],
   "refresh": "",
-  "schemaVersion": 38,
+  "schemaVersion": 39,
   "tags": [],
   "templating": {
     "list": [
+      {
+        "current": {
+          "selected": false,
+          "text": "grafana-athena-datasource",
+          "value": "cezpj2l6cwa9sb"
+        },
+        "hide": 0,
+        "includeAll": false,
+        "multi": false,
+        "name": "datasource",
+        "options": [],
+        "query": "grafana-athena-datasource",
+        "queryValue": "",
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "type": "datasource"
+      },
+      {
+        "current": {
+          "selected": false,
+          "text": "cur2",
+          "value": "cur2"
+        },
+        "datasource": {
+          "type": "grafana-athena-datasource",
+          "uid": "${datasource}"
+        },
+        "definition": "",
+        "hide": 0,
+        "includeAll": false,
+        "multi": false,
+        "name": "CUR_Table",
+        "options": [],
+        "query": {
+          "connectionArgs": {
+            "catalog": "__default",
+            "database": "__default",
+            "region": "__default",
+            "resultReuseEnabled": false,
+            "resultReuseMaxAgeInMinutes": 60
+          },
+          "format": 1,
+          "rawSQL": "show tables"
+        },
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 0,
+        "type": "query"
+      },
       {
         "current": {
           "selected": true,
@@ -2590,7 +2630,7 @@
         },
         "datasource": {
           "type": "grafana-athena-datasource",
-          "uid": "cc0eaa5b-84f7-417c-9d81-d74810abec39"
+          "uid": "${datasource}"
         },
         "definition": "",
         "description": "Select Linked Account",
@@ -2613,49 +2653,6 @@
         },
         "refresh": 1,
         "regex": "",
-        "skipUrlSync": false,
-        "sort": 3,
-        "type": "query"
-      },
-      {
-        "current": {
-          "selected": false,
-          "text": "Amazon Athena",
-          "value": "cc0eaa5b-84f7-417c-9d81-d74810abec39"
-        },
-        "hide": 0,
-        "includeAll": false,
-        "multi": false,
-        "name": "datasource",
-        "options": [],
-        "query": "grafana-athena-datasource",
-        "queryValue": "",
-        "refresh": 1,
-        "regex": "",
-        "skipUrlSync": false,
-        "type": "datasource"
-      },
-      {
-        "current": {
-          "selected": false,
-          "text": "cur2_data",
-          "value": "data"
-        },
-        "datasource": {
-          "type": "grafana-athena-datasource",
-          "uid": "${datasource}"
-        },
-        "definition": "",
-        "hide": 0,
-        "includeAll": false,
-        "multi": false,
-        "name": "CUR_Table",
-        "options": [],
-        "query": {
-          "rawSQL": "show tables"
-        },
-        "refresh": 1,
-        "regex": "^(?!cost_and_usage_data_status).+$",
         "skipUrlSync": false,
         "sort": 0,
         "type": "query"
@@ -2681,12 +2678,20 @@
         "name": "Regions",
         "options": [],
         "query": {
+          "connectionArgs": {
+            "catalog": "__default",
+            "database": "__default",
+            "region": "__default",
+            "resultReuseEnabled": false,
+            "resultReuseMaxAgeInMinutes": 60
+          },
+          "format": 1,
           "rawSQL": "select distinct product_location from $CUR_Table where product_location != '';"
         },
         "refresh": 1,
         "regex": "",
         "skipUrlSync": false,
-        "sort": 1,
+        "sort": 0,
         "type": "query"
       },
       {
@@ -2701,7 +2706,7 @@
         },
         "datasource": {
           "type": "grafana-athena-datasource",
-          "uid": "cc0eaa5b-84f7-417c-9d81-d74810abec39"
+          "uid": "${datasource}"
         },
         "definition": "",
         "hide": 0,
@@ -2718,17 +2723,17 @@
             "resultReuseMaxAgeInMinutes": 60
           },
           "format": 1,
-          "rawSQL": "select distinct line_item_product_code from $CUR_Table;\n"
+          "rawSQL": "select distinct line_item_product_code from $CUR_Table;"
         },
         "refresh": 1,
         "regex": "",
         "skipUrlSync": false,
-        "sort": 1,
+        "sort": 0,
         "type": "query"
       },
       {
         "current": {
-          "selected": true,
+          "selected": false,
           "text": "user_project",
           "value": "user_project"
         },
@@ -2761,7 +2766,7 @@
       },
       {
         "current": {
-          "selected": true,
+          "selected": false,
           "text": "-",
           "value": "-"
         },
@@ -2784,8 +2789,7 @@
             "resultReuseMaxAgeInMinutes": 60
           },
           "format": 1,
-          "rawSQL": "select DISTINCT element_at(resource_tags, '$ResourceTag')\nFROM $CUR_Table\nWHERE element_at(resource_tags, '$ResourceTag') IS NOT NULL\nAND element_at(resource_tags, '$ResourceTag') != '';",
-          "table": "cur2"
+          "rawSQL": "select DISTINCT element_at(resource_tags, '$ResourceTag')\nFROM $CUR_Table\nWHERE element_at(resource_tags, '$ResourceTag') IS NOT NULL\nAND element_at(resource_tags, '$ResourceTag') != '';"
         },
         "refresh": 1,
         "regex": "",
@@ -2802,7 +2806,7 @@
   "timepicker": {},
   "timezone": "",
   "title": "AWSCURE2Dashboard",
-  "uid": "c77c57a4-4da2-4aaf-a4bf-04a3e56bf921",
-  "version": 4,
+  "uid": "aws-cur2-billing-advance-analysis",
+  "version": 1,
   "weekStart": ""
 }
