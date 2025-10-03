@@ -1,4 +1,4 @@
-# CUR Data Export
+# CUR Data Analytics
 
 The Terraform module lets you deploy DataExports aggregation and analytics solution to your
 Centralized Monitoring Account (CMA), enabling data analysis and visualization.
