@@ -196,7 +196,7 @@
             "uid": "${datasource}"
           },
           "format": 0,
-          "rawSQL": "select\n  bill_billing_period_start_date,\n  sum(line_item_unblended_cost) AS cost\nfrom $CUR_Table\nwhere\n  $__timeFilter(bill_billing_period_start_date)\n  and product_location in ($Regions)\n  AND  line_item_product_code in ($Services)\n  AND $__timeFilter(line_item_usage_start_date)\n  AND line_item_usage_account_id IN ($linked_accounts)\ngroup by 1\norder by 1",
+          "rawSQL": "select\n  bill_billing_period_start_date,\n  sum(line_item_unblended_cost) AS cost\nfrom $CUR_Table\nwhere\n  $__timeFilter(bill_billing_period_start_date)\n  -- and product_location in ($Regions)\n  -- AND  line_item_product_code in ($Services)\n  AND $__timeFilter(line_item_usage_start_date)\n  AND line_item_usage_account_id IN ($linked_accounts)\ngroup by 1\norder by 1",
           "refId": "A",
           "table": "cur2"
         }
@@ -263,14 +263,16 @@
           "connectionArgs": {
             "catalog": "__default",
             "database": "__default",
-            "region": "__default"
+            "region": "__default",
+            "resultReuseEnabled": false,
+            "resultReuseMaxAgeInMinutes": 60
           },
           "datasource": {
             "type": "grafana-athena-datasource",
             "uid": "${datasource}"
           },
           "format": 1,
-          "rawSQL": "select\n  sum(line_item_unblended_cost) AS cost\nfrom $CUR_Table\nwhere\n$__timeFilter(line_item_usage_start_date)\nAND product_location in ($Regions)\nAND line_item_usage_account_id IN ($linked_accounts)\nAND line_item_product_code in ($Services)\n",
+          "rawSQL": "select\n  sum(line_item_unblended_cost) AS cost\nfrom $CUR_Table\nwhere\n  $__timeFilter(bill_billing_period_start_date)\n  -- AND product_location in ($Regions)\n  -- AND line_item_product_code in ($Services)\n  AND $__timeFilter(line_item_usage_start_date)\n  AND line_item_usage_account_id IN ($linked_accounts)\n",
           "refId": "A"
         }
       ],
@@ -362,14 +364,16 @@
           "connectionArgs": {
             "catalog": "__default",
             "database": "__default",
-            "region": "__default"
+            "region": "__default",
+            "resultReuseEnabled": false,
+            "resultReuseMaxAgeInMinutes": 60
           },
           "datasource": {
             "type": "grafana-athena-datasource",
             "uid": "${datasource}"
           },
           "format": 0,
-          "rawSQL": "select \n  bill_billing_period_start_date as time,\n  line_item_product_code as product,\n  sum(line_item_unblended_cost) as cost\nfrom $CUR_Table\nwhere\n$__timeFilter(bill_billing_period_start_date)\nAND product_location in ($Regions)\nand line_item_product_code in ($Services)\nAND line_item_usage_account_id IN ($linked_accounts)\ngroup by 1, 2\norder by 1",
+          "rawSQL": "select \n  bill_billing_period_start_date as time,\n  line_item_product_code as product,\n  sum(line_item_unblended_cost) as cost\nfrom $CUR_Table\nwhere\n  $__timeFilter(bill_billing_period_start_date)\n  -- AND product_location in ($Regions)\n  AND line_item_product_code in ($Services)\n  AND $__timeFilter(line_item_usage_start_date)\n  AND line_item_usage_account_id IN ($linked_accounts)\ngroup by 1, 2\norder by 1",
           "refId": "A"
         }
       ],
@@ -434,14 +438,16 @@
           "connectionArgs": {
             "catalog": "__default",
             "database": "__default",
-            "region": "__default"
+            "region": "__default",
+            "resultReuseEnabled": false,
+            "resultReuseMaxAgeInMinutes": 60
           },
           "datasource": {
             "type": "grafana-athena-datasource",
             "uid": "${datasource}"
           },
           "format": 1,
-          "rawSQL": "select \n  line_item_product_code as product,\n  sum(line_item_blended_cost) as cost\nfrom $CUR_Table\nwhere\n  $__timeFilter(line_item_usage_start_date)\nAND product_location in ($Regions)\nAND line_item_usage_account_id IN ($linked_accounts)\nAND line_item_product_code in ($Services)\ngroup by 1\norder by 2 DESC\nlimit 1",
+          "rawSQL": "select \n  line_item_product_code as product,\n  sum(line_item_blended_cost) as cost\nfrom $CUR_Table\nwhere\n  $__timeFilter(bill_billing_period_start_date)\n  -- AND product_location in ($Regions)\n  AND line_item_product_code in ($Services)\n  AND $__timeFilter(line_item_usage_start_date)\n  AND line_item_usage_account_id IN ($linked_accounts)\ngroup by 1\norder by 2 DESC\nlimit 1",
           "refId": "A"
         }
       ],
@@ -546,14 +552,16 @@
           "connectionArgs": {
             "catalog": "__default",
             "database": "__default",
-            "region": "__default"
+            "region": "__default",
+            "resultReuseEnabled": false,
+            "resultReuseMaxAgeInMinutes": 60
           },
           "datasource": {
             "type": "grafana-athena-datasource",
             "uid": "${datasource}"
           },
           "format": 0,
-          "rawSQL": "select \n  bill_billing_period_start_date as time,\n  product_location as location,\n  sum(line_item_blended_cost) as cost\nfrom $CUR_Table\nwhere\n  $__timeFilter(bill_billing_period_start_date)\nAND product_location in ($Regions)\nAND line_item_usage_account_id IN ($linked_accounts)\nAND line_item_product_code in ($Services)\ngroup by 1, 2\norder by 1",
+          "rawSQL": "select \n  bill_billing_period_start_date as time,\n  product_location as location,\n  sum(line_item_unblended_cost) as cost\nfrom $CUR_Table\nwhere\n  $__timeFilter(bill_billing_period_start_date)\n  AND product_location in ($Regions)\n  -- AND line_item_product_code in ($Services)\n  AND $__timeFilter(line_item_usage_start_date)\n  AND line_item_usage_account_id IN ($linked_accounts)\ngroup by 1, 2\norder by 1",
           "refId": "A"
         }
       ],
@@ -627,14 +635,16 @@
           "connectionArgs": {
             "catalog": "__default",
             "database": "__default",
-            "region": "__default"
+            "region": "__default",
+            "resultReuseEnabled": false,
+            "resultReuseMaxAgeInMinutes": 60
           },
           "datasource": {
             "type": "grafana-athena-datasource",
             "uid": "${datasource}"
           },
           "format": 0,
-          "rawSQL": "select \n  bill_billing_period_start_date as time,\n  product_location as location,\n  sum(line_item_blended_cost) as cost\nfrom $CUR_Table\nwhere\n  $__timeFilter(line_item_usage_start_date)\nAND product_location in ($Regions)\nAND line_item_usage_account_id IN ($linked_accounts)\nAND line_item_product_code in ($Services)\ngroup by 1, 2\nhaving\n sum(line_item_blended_cost) > 1\norder by 1",
+          "rawSQL": "select \n  bill_billing_period_start_date as time,\n  product_location as location,\n  sum(line_item_blended_cost) as cost\nfrom $CUR_Table\nwhere\n  $__timeFilter(bill_billing_period_start_date)\n  AND $__timeFilter(line_item_usage_start_date)\n  AND product_location in ($Regions)\n  -- AND line_item_product_code in ($Services)\n  AND line_item_usage_account_id IN ($linked_accounts)\ngroup by 1, 2\nhaving\n sum(line_item_blended_cost) > 1\norder by 1",
           "refId": "A"
         }
       ],
@@ -709,14 +719,16 @@
           "connectionArgs": {
             "catalog": "__default",
             "database": "__default",
-            "region": "__default"
+            "region": "__default",
+            "resultReuseEnabled": false,
+            "resultReuseMaxAgeInMinutes": 60
           },
           "datasource": {
             "type": "grafana-athena-datasource",
             "uid": "${datasource}"
           },
           "format": 1,
-          "rawSQL": "select \n  product_location as location,\n  sum(line_item_blended_cost) as cost\nfrom $CUR_Table\nwhere\n  $__timeFilter(line_item_usage_start_date)\nAND product_location in ($Regions)\nAND line_item_usage_account_id IN ($linked_accounts)\nAND line_item_product_code in ($Services)\ngroup by 1\norder by 2 DESC\nlimit 1",
+          "rawSQL": "select \n  product_location as location,\n  sum(line_item_blended_cost) as cost\nfrom $CUR_Table\nwhere\n  $__timeFilter(bill_billing_period_start_date)\n  AND product_location in ($Regions)\n  -- AND line_item_product_code in ($Services)\n  AND $__timeFilter(line_item_usage_start_date)\n  AND line_item_usage_account_id IN ($linked_accounts)\ngroup by 1\norder by 2 DESC\nlimit 1",
           "refId": "A"
         }
       ],
@@ -790,7 +802,7 @@
             "h": 8,
             "w": 12,
             "x": 0,
-            "y": 2
+            "y": 33
           },
           "id": 10,
           "interval": "600m",
@@ -916,10 +928,9 @@
             "h": 8,
             "w": 12,
             "x": 12,
-            "y": 2
+            "y": 33
           },
           "id": 14,
-          "links": [],
           "options": {
             "barRadius": 0,
             "barWidth": 0.75,
@@ -1004,7 +1015,7 @@
             "h": 5,
             "w": 12,
             "x": 0,
-            "y": 10
+            "y": 41
           },
           "id": 24,
           "options": {
@@ -1019,7 +1030,7 @@
             },
             "showHeader": true
           },
-          "pluginVersion": "10.2.2",
+          "pluginVersion": "10.4.1",
           "targets": [
             {
               "connectionArgs": {
@@ -1076,7 +1087,7 @@
             "h": 5,
             "w": 12,
             "x": 12,
-            "y": 10
+            "y": 41
           },
           "id": 12,
           "options": {
@@ -1091,7 +1102,7 @@
             },
             "showHeader": true
           },
-          "pluginVersion": "10.2.2",
+          "pluginVersion": "10.4.1",
           "targets": [
             {
               "connectionArgs": {
@@ -1241,7 +1252,7 @@
             "h": 8,
             "w": 24,
             "x": 0,
-            "y": 3
+            "y": 34
           },
           "id": 16,
           "links": [
@@ -1335,7 +1346,7 @@
             "h": 9,
             "w": 12,
             "x": 0,
-            "y": 11
+            "y": 42
           },
           "id": 29,
           "options": {
@@ -1410,7 +1421,7 @@
             "h": 9,
             "w": 12,
             "x": 12,
-            "y": 11
+            "y": 42
           },
           "id": 30,
           "options": {
@@ -1545,7 +1556,7 @@
             "h": 9,
             "w": 24,
             "x": 0,
-            "y": 20
+            "y": 51
           },
           "id": 31,
           "options": {
@@ -1560,7 +1571,7 @@
             },
             "showHeader": true
           },
-          "pluginVersion": "10.2.2",
+          "pluginVersion": "10.4.1",
           "targets": [
             {
               "connectionArgs": {
@@ -1648,7 +1659,7 @@
             "h": 9,
             "w": 24,
             "x": 0,
-            "y": 29
+            "y": 60
           },
           "id": 25,
           "links": [
@@ -2686,7 +2697,7 @@
             "resultReuseMaxAgeInMinutes": 60
           },
           "format": 1,
-          "rawSQL": "select distinct product_location from $CUR_Table where product_location != '';"
+          "rawSQL": "select distinct product_location from $CUR_Table\nwhere product_region_code IS NOT NULL;"
         },
         "refresh": 1,
         "regex": "",
@@ -2800,8 +2811,8 @@
     ]
   },
   "time": {
-    "from": "now-6M",
-    "to": "now"
+    "from": "now/M",
+    "to": "now/M"
   },
   "timepicker": {},
   "timezone": "",
