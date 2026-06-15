@@ -83,7 +83,7 @@ resource "aws_lambda_function" "cur_crawler_initializer_initializer" {
   function_name                  = local.cur_crawler_initializer_lambda_name
   filename                       = data.archive_file.cur_crawler_initializer_lambda_code[0].output_path
   handler                        = "${local.cur_crawler_initializer_lambda_name}.lambda_handler"
-  runtime                        = "python3.11"
+  runtime                        = "python3.14"
   reserved_concurrent_executions = 1
   role                           = aws_iam_role.cur_crawler_initializer_executor[0].arn
   timeout                        = 30
