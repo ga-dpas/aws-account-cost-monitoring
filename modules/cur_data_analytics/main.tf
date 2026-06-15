@@ -4,6 +4,7 @@ data "aws_partition" "current" {}
 
 locals {
   account_id = data.aws_caller_identity.current.account_id
+  region     = data.aws_region.current.region
 
   data_export_bucket_name         = var.data_exports_aggregate_bucket_name != "" ? var.data_exports_aggregate_bucket_name : "${var.resource_prefix}-${local.account_id}-data-exports"
   athena_query_result_bucket_name = "${var.resource_prefix}-${local.account_id}-athena-output"
@@ -80,7 +81,7 @@ resource "aws_s3_bucket_lifecycle_configuration" "data_export_aggregate_s3" {
       noncurrent_days = 1
     }
     expiration {
-      days = 730  # 2 years
+      days = 730 # 2 years
     }
   }
 
@@ -570,9 +571,9 @@ resource "aws_iam_role_policy" "data_export_crawler_policy" {
           "glue:ImportCatalogToGlue"
         ]
         Resource = [
-          "arn:${data.aws_partition.current.partition}:glue:${data.aws_region.current.name}:${local.account_id}:catalog",
-          "arn:${data.aws_partition.current.partition}:glue:${data.aws_region.current.name}:${local.account_id}:database/${aws_glue_catalog_database.data_export_db[0].name}",
-          "arn:${data.aws_partition.current.partition}:glue:${data.aws_region.current.name}:${local.account_id}:table/${aws_glue_catalog_database.data_export_db[0].name}/*"
+          "arn:${data.aws_partition.current.partition}:glue:${local.region}:${local.account_id}:catalog",
+          "arn:${data.aws_partition.current.partition}:glue:${local.region}:${local.account_id}:database/${aws_glue_catalog_database.data_export_db[0].name}",
+          "arn:${data.aws_partition.current.partition}:glue:${local.region}:${local.account_id}:table/${aws_glue_catalog_database.data_export_db[0].name}/*"
         ]
       },
       {
@@ -582,7 +583,7 @@ resource "aws_iam_role_policy" "data_export_crawler_policy" {
           "logs:CreateLogStream"
         ]
         Resource = [
-          "arn:${data.aws_partition.current.partition}:logs:${data.aws_region.current.name}:${local.account_id}:log-group:/aws-glue/crawlers:*"
+          "arn:${data.aws_partition.current.partition}:logs:${local.region}:${local.account_id}:log-group:/aws-glue/crawlers:*"
         ]
       },
       {
@@ -591,7 +592,7 @@ resource "aws_iam_role_policy" "data_export_crawler_policy" {
           "logs:PutLogEvents"
         ]
         Resource = [
-          "arn:${data.aws_partition.current.partition}:logs:${data.aws_region.current.name}:${local.account_id}:log-group:/aws-glue/crawlers:log-stream:*"
+          "arn:${data.aws_partition.current.partition}:logs:${local.region}:${local.account_id}:log-group:/aws-glue/crawlers:log-stream:*"
         ]
       }
     ]
@@ -799,9 +800,9 @@ resource "aws_iam_policy" "data_exports_read_access_policy" {
             "glue:BatchGetPartition"
           ],
           "Resource" : [
-            "arn:${data.aws_partition.current.partition}:glue:${data.aws_region.current.name}:${local.account_id}:catalog",
-            "arn:${data.aws_partition.current.partition}:glue:${data.aws_region.current.name}:${local.account_id}:database/${aws_glue_catalog_database.data_export_db[0].name}",
-            "arn:${data.aws_partition.current.partition}:glue:${data.aws_region.current.name}:${local.account_id}:table/${aws_glue_catalog_database.data_export_db[0].name}/*"
+            "arn:${data.aws_partition.current.partition}:glue:${local.region}:${local.account_id}:catalog",
+            "arn:${data.aws_partition.current.partition}:glue:${local.region}:${local.account_id}:database/${aws_glue_catalog_database.data_export_db[0].name}",
+            "arn:${data.aws_partition.current.partition}:glue:${local.region}:${local.account_id}:table/${aws_glue_catalog_database.data_export_db[0].name}/*"
           ]
         },
         {
