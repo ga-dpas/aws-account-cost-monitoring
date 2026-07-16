@@ -314,6 +314,5 @@ and views per day, etc. Most implementations will be between $10 and $300/month,
 
 Contributions to each component or new components are welcome by all individuals and teams.
 Please create MR with the proposed changes or ideas and name the branch with `feature/<short-description-of-feature>`.
-Please assign it to Zach Dicus and tag Ron Dilley and Jacob Charles in the description.
 
 We look forward to your contributions!
