@@ -579,7 +579,15 @@ resource "aws_iam_role_policy" "data_export_crawler_policy" {
       {
         Effect = "Allow"
         Action = [
-          "logs:CreateLogGroup",
+          "logs:CreateLogGroup"
+        ]
+        Resource = [
+          "arn:${data.aws_partition.current.partition}:logs:${local.region}:${local.account_id}:log-group:/aws-glue/crawlers"
+        ]
+      },
+      {
+        Effect = "Allow"
+        Action = [
           "logs:CreateLogStream"
         ]
         Resource = [

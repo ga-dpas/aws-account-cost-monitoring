@@ -32,9 +32,17 @@ data "aws_iam_policy_document" "cur_crawler_initializer_lambda_policy" {
     sid    = "CloudWatch"
     effect = "Allow"
     actions = [
-      "logs:CreateLogStream",
-      "logs:PutLogEvents",
       "logs:CreateLogGroup",
+    ]
+    resources = [aws_cloudwatch_log_group.cur_crawler_initializer_initializer[0].arn]
+  }
+
+  statement {
+    sid    = "CloudWatch"
+    effect = "Allow"
+    actions = [
+      "logs:CreateLogStream",
+      "logs:PutLogEvents"
     ]
     resources = ["${aws_cloudwatch_log_group.cur_crawler_initializer_initializer[0].arn}:*"]
   }
